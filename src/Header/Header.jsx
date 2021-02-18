@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -24,13 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Header() {
-  const [viewType, setViewType] = useState("listView");
-  const handleViewType = (e, viewType) => {
-    if (viewType !== null) {
-      setViewType(viewType);
-    }
-  };
+function Header({ viewType, changeViewType }) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -45,7 +39,7 @@ function Header() {
           <ToggleButtonGroup
             value={viewType}
             exclusive
-            onChange={handleViewType}
+            onChange={changeViewType}
           >
             <ToggleButton value="cardView" className={classes.toggleButton}>
               <CardViewIcon />
