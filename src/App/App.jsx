@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
 import { Container } from "@material-ui/core";
 import Header from "../Header/Header";
 import Filters from "../Filters/Filters";
@@ -18,7 +19,9 @@ function App() {
       <Header viewType={viewType} changeViewType={changeViewType} />
       <Container maxWidth="lg">
         <Filters />
-        <UsersList />
+        <Paper elevation={3}>
+          <UsersList />
+        </Paper>
       </Container>
     </Box>
   );

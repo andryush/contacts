@@ -47,7 +47,7 @@ function UsersList() {
             <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Phone</StyledTableCell>
             <StyledTableCell align="left">Location</StyledTableCell>
-            <StyledTableCell align="left">Nationality</StyledTableCell>
+            <StyledTableCell align="right">Nationality</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
