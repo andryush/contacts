@@ -44,8 +44,8 @@ function UsersList() {
             <StyledTableCell align="left">Avatar</StyledTableCell>
             <StyledTableCell align="left">Full name</StyledTableCell>
             <StyledTableCell align="left">Birthday</StyledTableCell>
-            <StyledTableCell align="left">Email</StyledTableCell>
-            <StyledTableCell align="left">Phone</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="left">Location</StyledTableCell>
             <StyledTableCell align="right">Nationality</StyledTableCell>
           </TableRow>
