@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Header({ viewType, changeViewType }) {
+function Header({ viewType, updateViewType }) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -39,7 +39,7 @@ function Header({ viewType, changeViewType }) {
           <ToggleButtonGroup
             value={viewType}
             exclusive
-            onChange={changeViewType}
+            onChange={updateViewType}
           >
             <ToggleButton value="cardView" className={classes.toggleButton}>
               <CardViewIcon />

@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function SearchByNationality() {
+function SearchByNationality({ nationalityFilter, updateNationalityFilter }) {
   const classes = useStyles();
   return (
     <TextField
@@ -17,6 +17,8 @@ function SearchByNationality() {
       id="search-by-nationality"
       placeholder="Search by nationality"
       variant="outlined"
+      value={nationalityFilter}
+      onChange={updateNationalityFilter}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,25 +10,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function SelectByGender() {
-  const [age, setAge] = useState("");
+function SelectByGender({ genderFilter, updateGenderFilter }) {
   const classes = useStyles();
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+
   return (
     <TextField
       className={classes.root}
-      id="standard-select-currency"
+      id="standard-select-gender"
       select
-      value="gender"
-      onChange={handleChange}
+      value={!genderFilter ? "gender" : genderFilter}
+      onChange={updateGenderFilter}
       variant="outlined"
     >
-      <MenuItem value="gender">Gender</MenuItem>
-      <MenuItem value={10}>Male</MenuItem>
-      <MenuItem value={20}>Female</MenuItem>
-      <MenuItem value={30}>Indeterminate</MenuItem>
+      <MenuItem value="gender" disabled>
+        Gender
+      </MenuItem>
+      <MenuItem value="">None</MenuItem>
+      <MenuItem value="male">Male</MenuItem>
+      <MenuItem value="female">Female</MenuItem>
+      <MenuItem value="indeterminate">Indeterminate</MenuItem>
     </TextField>
   );
 }

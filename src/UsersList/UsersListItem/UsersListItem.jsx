@@ -6,9 +6,16 @@ import Chip from "@material-ui/core/Chip";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import CopyToClipboard from "../../CopyToClipboard/CopyToClipboard";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { dateConverter, findNationality } from "../../helpers/helpers";
 import { countriesList } from "../../helpers/countriesList";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    borderRadius: 3,
+  },
+}));
 
 function UsersListItem({
   name,
@@ -21,6 +28,7 @@ function UsersListItem({
   gender,
   picture,
 }) {
+  const classes = useStyles();
   const date = dateConverter(dob.date);
   const nationality = findNationality(nat, countriesList);
 
@@ -50,6 +58,7 @@ function UsersListItem({
       </TableCell>
       <TableCell align="right">
         <Chip
+          className={classes.root}
           label={nationality}
           variant="default"
           color="primary"

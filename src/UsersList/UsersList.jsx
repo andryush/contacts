@@ -11,6 +11,9 @@ import Paper from "@material-ui/core/Paper";
 
 import UserListItem from "./UsersListItem/UsersListItem";
 
+import { findNationality } from "../helpers/helpers";
+import { countriesList } from "../helpers/countriesList";
+
 const useStyles = makeStyles({
   root: {
     marginTop: 5,
@@ -26,15 +29,66 @@ const StyledTableCell = withStyles(() => ({
   },
 }))(TableCell);
 
-function UsersList() {
+function UsersList({
+  page,
+  updateMaxPageCount,
+  nameFilter,
+  nationalityFilter,
+  genderFilter,
+}) {
   const [users, setUsers] = useState([]);
   const classes = useStyles();
 
+  const getData = async () => {
+    const data = await fetch(
+      "https://randomuser.me/api/?results=100"
+    ).then((response) => response.json());
+    setUsers(data.results);
+  };
+
+  const splitToArrays = (data, size) => {
+    const result = [];
+    for (let i = 0; i < data.length; i += size) {
+      result.push(data.slice(i, i + size));
+    }
+    return result;
+  };
+
+  let splitted = splitToArrays(users, 10);
+
+  if (nameFilter.length > 0) {
+    const filtered = users.filter((el) => {
+      return (
+        el.name.first.toLowerCase().includes(nameFilter.toLowerCase()) ||
+        el.name.last.toLowerCase().includes(nameFilter.toLowerCase())
+      );
+    });
+    splitted = splitToArrays(filtered, 10);
+  }
+
+  if (nationalityFilter.length > 0) {
+    const filtered = users.filter((el) => {
+      return findNationality(el.nat, countriesList)
+        .toLowerCase()
+        .includes(nationalityFilter.toLowerCase());
+    });
+    splitted = splitToArrays(filtered, 10);
+  }
+
+  if (genderFilter.length > 0) {
+    const filtered = users.filter((el) => {
+      return el.gender.toLowerCase() === genderFilter.toLowerCase();
+    });
+    splitted = splitToArrays(filtered, 10);
+  }
+
   useEffect(() => {
-    fetch("https://randomuser.me/api/?results=100")
-      .then((response) => response.json())
-      .then((data) => setUsers(data.results));
+    getData();
   }, []);
+
+  useEffect(() => {
+    updateMaxPageCount(splitted.length);
+  }, [updateMaxPageCount, splitted]);
 
   return (
     <TableContainer component={Paper} className={classes.root}>
@@ -51,36 +105,38 @@ function UsersList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map(
-            ({
-              name,
-              dob,
-              email,
-              phone,
-              location,
-              country,
-              nat,
-              gender,
-              login,
-              picture,
-            }) => {
-              return (
-                <UserListItem
-                  key={login.uuid}
-                  name={name}
-                  dob={dob}
-                  email={email}
-                  phone={phone}
-                  location={location}
-                  country={country}
-                  nat={nat}
-                  gender={gender}
-                  uuid={login.uuid}
-                  picture={picture.large}
-                />
-              );
-            }
-          )}
+          {splitted.length > 0
+            ? splitted[page - 1].map(
+                ({
+                  name,
+                  dob,
+                  email,
+                  phone,
+                  location,
+                  country,
+                  nat,
+                  gender,
+                  login,
+                  picture,
+                }) => {
+                  return (
+                    <UserListItem
+                      key={login.uuid}
+                      name={name}
+                      dob={dob}
+                      email={email}
+                      phone={phone}
+                      location={location}
+                      country={country}
+                      nat={nat}
+                      gender={gender}
+                      uuid={login.uuid}
+                      picture={picture.large}
+                    />
+                  );
+                }
+              )
+            : null}
         </TableBody>
       </Table>
     </TableContainer>

@@ -14,15 +14,37 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Filters() {
+function Filters({
+  nameFilter,
+  updateNameFilter,
+  nationalityFilter,
+  updateNationalityFilter,
+  genderFilter,
+  updateGenderFilter,
+  resetFilters,
+}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <SearchByName />
-      <SelectByGender />
-      <SearchByNationality />
-      <Button variant="outlined" color="primary" size="large">
+      <SearchByName
+        nameFilter={nameFilter}
+        updateNameFilter={updateNameFilter}
+      />
+      <SelectByGender
+        genderFilter={genderFilter}
+        updateGenderFilter={updateGenderFilter}
+      />
+      <SearchByNationality
+        nationalityFilter={nationalityFilter}
+        updateNationalityFilter={updateNationalityFilter}
+      />
+      <Button
+        variant="outlined"
+        color="primary"
+        size="large"
+        onClick={resetFilters}
+      >
         Clear
       </Button>
     </div>

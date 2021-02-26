@@ -8,14 +8,17 @@ const useStyles = makeStyles(() => ({
     marginRight: 5,
   },
 }));
-function SearchByName(cssSearch) {
+function SearchByName({ nameFilter, updateNameFilter }) {
   const classes = useStyles();
+
   return (
     <TextField
       className={classes.root}
       id="search-by-full-name"
       placeholder="Search by full name"
       variant="outlined"
+      value={nameFilter}
+      onChange={updateNameFilter}
     />
   );
 }
