@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import Filters from "../Filters/Filters";
 import UsersList from "../UsersList/UsersList";
 import Pagination from "../Pagination/Pagination";
+import Statistics from "../Statistics/Statistics";
 
 function App() {
   const [viewType, setViewType] = useState("listView");
@@ -14,6 +15,7 @@ function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [nationalityFilter, setNationalityFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
+  const [statsMale, setStatsMale] = useState(0);
 
   const updateViewType = (e, value) => {
     if (value !== null) {
@@ -57,6 +59,10 @@ function App() {
     setGenderFilter("");
   };
 
+  const updateStatsMale = (num) => {
+    setStatsMale(num);
+  };
+
   return (
     <Box>
       <Header viewType={viewType} updateViewType={updateViewType} />
@@ -77,8 +83,10 @@ function App() {
             nameFilter={nameFilter}
             nationalityFilter={nationalityFilter}
             genderFilter={genderFilter}
+            updateStatsMale={updateStatsMale}
           />
         </Paper>
+        <Statistics statsMale={statsMale} />
         <Pagination
           page={page}
           updatePage={updatePage}

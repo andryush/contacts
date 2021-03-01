@@ -35,10 +35,10 @@ function UsersList({
   nameFilter,
   nationalityFilter,
   genderFilter,
+  updateStatsMale,
 }) {
   const [users, setUsers] = useState([]);
   const classes = useStyles();
-
   const getData = async () => {
     const data = await fetch(
       "https://randomuser.me/api/?results=100"
