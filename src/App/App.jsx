@@ -15,7 +15,14 @@ function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [nationalityFilter, setNationalityFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
-  const [statsMale, setStatsMale] = useState(0);
+  const [statistics, setStatistics] = useState({
+    size: 0,
+    male: 0,
+    female: 0,
+    indeterminate: 0,
+    predominate: "",
+  });
+  const [nationalities, setNationalities] = useState([]);
 
   const updateViewType = (e, value) => {
     if (value !== null) {
@@ -59,8 +66,12 @@ function App() {
     setGenderFilter("");
   };
 
-  const updateStatsMale = (num) => {
-    setStatsMale(num);
+  const updateStatistics = (stats) => {
+    setStatistics(stats);
+  };
+
+  const updateNationalities = (data) => {
+    setNationalities(data);
   };
 
   return (
@@ -83,10 +94,11 @@ function App() {
             nameFilter={nameFilter}
             nationalityFilter={nationalityFilter}
             genderFilter={genderFilter}
-            updateStatsMale={updateStatsMale}
+            updateStatistics={updateStatistics}
+            updateNationalities={updateNationalities}
           />
         </Paper>
-        <Statistics statsMale={statsMale} />
+        <Statistics statistics={statistics} nationalities={nationalities} />
         <Pagination
           page={page}
           updatePage={updatePage}
