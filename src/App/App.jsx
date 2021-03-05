@@ -4,12 +4,16 @@ import Paper from "@material-ui/core/Paper";
 import { Container } from "@material-ui/core";
 import Header from "../Header/Header";
 import Filters from "../Filters/Filters";
-import UsersList from "../UsersList/UsersList";
+import Users from "../Users/Users";
 import Pagination from "../Pagination/Pagination";
 import Statistics from "../Statistics/Statistics";
 
+const lsViewType = localStorage.getItem("viewType");
+
 function App() {
-  const [viewType, setViewType] = useState("listView");
+  const [viewType, setViewType] = useState(
+    lsViewType === null ? "listView" : lsViewType
+  );
   const [page, setPage] = useState(1);
   const [maxPageCount, setMaxPageCount] = useState(null);
   const [nameFilter, setNameFilter] = useState("");
@@ -27,6 +31,7 @@ function App() {
   const updateViewType = (e, value) => {
     if (value !== null) {
       setViewType(value);
+      localStorage.setItem("viewType", value);
     }
   };
 
@@ -88,7 +93,8 @@ function App() {
           resetFilters={resetFilters}
         />
         <Paper elevation={3}>
-          <UsersList
+          <Users
+            viewType={viewType}
             page={page}
             updateMaxPageCount={updateMaxPageCount}
             nameFilter={nameFilter}

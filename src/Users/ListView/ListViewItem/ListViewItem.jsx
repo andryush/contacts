@@ -5,11 +5,11 @@ import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
-import CopyToClipboard from "../../CopyToClipboard/CopyToClipboard";
+import CopyToClipboard from "../../../CopyToClipboard/CopyToClipboard";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { dateConverter, findNationality } from "../../helpers/helpers";
-import { countriesList } from "../../helpers/countriesList";
+import { dateConverter, findNationality } from "../../../helpers/helpers";
+import { countriesList } from "../../../helpers/countriesList";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function UsersListItem({
+function ListViewItem({
   name,
   dob,
   email,
@@ -68,4 +68,4 @@ function UsersListItem({
     </TableRow>
   );
 }
-export default UsersListItem;
+export default ListViewItem;
