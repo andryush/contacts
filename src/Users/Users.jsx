@@ -3,6 +3,7 @@ import { findNationality } from "../helpers/helpers";
 import { countriesList } from "../helpers/countriesList";
 import ListView from "./ListView/ListView";
 import CardView from "./CardView/CardView";
+import Spinner from "../Spinner/Spinner";
 
 function Users({
   page,
@@ -13,9 +14,12 @@ function Users({
   updateStatistics,
   updateNationalities,
   viewType,
+  refresh,
+  updateRefresh,
 }) {
   const [users, setUsers] = useState([]);
   const [splitted, setSplitted] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const splitToArrays = (data) => {
     const size = 10;
@@ -61,10 +65,12 @@ function Users({
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetch(
-        "https://randomuser.me/api/?results=100"
-      ).then((response) => response.json());
+      setLoading(true);
+      const data = await fetch("https://randomuser.me/api/?results=100")
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
       setUsers(data.results);
+      setLoading(false);
       updateStatistics(calculateStats(data.results));
       setSplitted(splitToArrays(data.results));
       const nats = data.results.map((el) =>
@@ -72,8 +78,11 @@ function Users({
       );
       updateNationalities(calculateNats(nats));
     };
-    getData();
-  }, []);
+    if (refresh) {
+      getData();
+      updateRefresh();
+    }
+  }, [refresh, updateRefresh, updateStatistics, updateNationalities]);
 
   useEffect(() => {
     updateMaxPageCount(splitted.length);
@@ -112,7 +121,9 @@ function Users({
     }
   }, [genderFilter, users]);
 
-  return viewType === "listView" ? (
+  return loading ? (
+    <Spinner />
+  ) : viewType === "listView" ? (
     <ListView splitted={splitted} page={page} />
   ) : (
     <CardView splitted={splitted} page={page} />

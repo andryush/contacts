@@ -14,6 +14,7 @@ function App() {
   const [viewType, setViewType] = useState(
     lsViewType === null ? "listView" : lsViewType
   );
+  const [refresh, setRefresh] = useState(true);
   const [page, setPage] = useState(1);
   const [maxPageCount, setMaxPageCount] = useState(null);
   const [nameFilter, setNameFilter] = useState("");
@@ -33,6 +34,11 @@ function App() {
       setViewType(value);
       localStorage.setItem("viewType", value);
     }
+  };
+
+  const updateRefresh = () => {
+    setRefresh((prev) => !prev);
+    setPage(1);
   };
 
   const updatePage = (e, page) => {
@@ -81,7 +87,11 @@ function App() {
 
   return (
     <Box>
-      <Header viewType={viewType} updateViewType={updateViewType} />
+      <Header
+        viewType={viewType}
+        updateViewType={updateViewType}
+        updateRefresh={updateRefresh}
+      />
       <Container maxWidth="lg">
         <Filters
           nameFilter={nameFilter}
@@ -96,6 +106,8 @@ function App() {
           <Users
             viewType={viewType}
             page={page}
+            refresh={refresh}
+            updateRefresh={updateRefresh}
             updateMaxPageCount={updateMaxPageCount}
             nameFilter={nameFilter}
             nationalityFilter={nationalityFilter}

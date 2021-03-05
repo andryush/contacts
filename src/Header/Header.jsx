@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import ResetViewIcon from "./ViewIcons/ResetViewIcon/ResetViewIcon";
+import RefreshViewIcon from "./ViewIcons/RefreshViewIcon/RefreshViewIcon";
 import ListViewIcon from "./ViewIcons/ListViewIcon/ListViewIcon";
 import CardViewIcon from "./ViewIcons/CardViewIcon/CardViewIcon";
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Header({ viewType, updateViewType }) {
+function Header({ viewType, updateViewType, updateRefresh }) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -33,8 +33,8 @@ function Header({ viewType, updateViewType }) {
           <Typography variant="h6" className={classes.title}>
             Contacts App
           </Typography>
-          <Button value="left" color="inherit">
-            <ResetViewIcon />
+          <Button value="left" color="inherit" onClick={updateRefresh}>
+            <RefreshViewIcon />
           </Button>
           <ToggleButtonGroup
             value={viewType}
