@@ -16,6 +16,8 @@ function Users({
   viewType,
   refresh,
   updateRefresh,
+  sortBy,
+  updateSortBy,
 }) {
   const [users, setUsers] = useState([]);
   const [splitted, setSplitted] = useState([]);
@@ -121,10 +123,35 @@ function Users({
     }
   }, [genderFilter, users]);
 
+  useEffect(() => {
+    let filtered = [];
+    let usersCopy = [...users];
+    if (sortBy === "asc") {
+      filtered = usersCopy.sort((a, b) =>
+        a.name.first.localeCompare(b.name.first)
+      );
+      setSplitted(splitToArrays(filtered));
+    }
+    if (sortBy === "desc") {
+      filtered = usersCopy.sort((a, b) =>
+        b.name.first.localeCompare(a.name.first)
+      );
+      setSplitted(splitToArrays(filtered));
+    }
+    if (sortBy === "default") {
+      setSplitted(splitToArrays(users));
+    }
+  }, [sortBy, users]);
+
   return loading ? (
     <Spinner />
   ) : viewType === "listView" ? (
-    <ListView splitted={splitted} page={page} />
+    <ListView
+      splitted={splitted}
+      page={page}
+      updateSortBy={updateSortBy}
+      sortBy={sortBy}
+    />
   ) : (
     <CardView splitted={splitted} page={page} />
   );

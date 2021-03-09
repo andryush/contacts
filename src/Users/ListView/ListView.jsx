@@ -8,6 +8,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import Link from "@material-ui/core/Link";
 
 import ListViewItem from "./ListViewItem/ListViewItem";
 
@@ -18,6 +22,11 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  link: {
+    color: "black",
+    fontWeight: 900,
+    fontFamily: "Roboto",
+  },
 });
 
 const StyledTableCell = withStyles(() => ({
@@ -26,16 +35,29 @@ const StyledTableCell = withStyles(() => ({
   },
 }))(TableCell);
 
-function ListView({ splitted, page }) {
+function ListView({ splitted, page, updateSortBy, sortBy }) {
   const classes = useStyles();
-
   return (
     <TableContainer component={Paper} className={classes.root}>
       <Table className={classes.table} aria-label="caption table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="left">Avatar</StyledTableCell>
-            <StyledTableCell align="left">Full name</StyledTableCell>
+            <StyledTableCell align="left">
+              <Link component="button" underline="none" onClick={updateSortBy}>
+                <Box display="flex" alignItems="center">
+                  <div>
+                    <span className={classes.link}>Full name</span>
+                  </div>
+                  <ArrowDropUpIcon
+                    color={sortBy === "asc" ? "primary" : "disabled"}
+                  />
+                  <ArrowDropDownIcon
+                    color={sortBy === "desc" ? "primary" : "disabled"}
+                  />
+                </Box>
+              </Link>
+            </StyledTableCell>
             <StyledTableCell align="left">Birthday</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
